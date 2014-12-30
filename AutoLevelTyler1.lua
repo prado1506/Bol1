@@ -1,14 +1,37 @@
-local version = "0.1"
+-- Jokiblack Auto Level Spells --
+-- Version 0.1 --
+local version = "0.2"
  
 local abilitySequence
 local qOff, wOff, eOff, rOff = 0,0,0,0
 
 function OnTick()
     if Menu.Ads.AutoLevelspells then
-		CarregarSequencia()
+		Carry()
         AutoLevel()
     end
 end	
+
+function Carry()
+    local sequence = Menu.Ads.sequenceSpells
+-- Want a champion disabled? Put "--" in front of their line! --
+            if sequence == 1 then        abilitySequence = { 1, 2, 3, 1, 1, 4, 1, 2, 1, 2, 4, 2, 2, 3, 3, 4, 3, 3, }
+	elseif sequence == 2 then        abilitySequence = { 1, 3, 2, 1, 1, 4, 1, 3, 1, 3, 4, 3, 3, 2, 2, 4, 2, 2, }
+	elseif sequence == 3 then        abilitySequence = { 2, 1, 3, 2, 2, 4, 2, 1, 2, 1, 4, 1, 1, 3, 3, 4, 3, 3, }
+	elseif sequence == 4 then        abilitySequence = { 2, 3, 1, 2, 2, 4, 2, 3, 2, 3, 4, 3, 3, 1, 1, 4, 1, 1, }
+	elseif sequence == 5 then        abilitySequence = { 3, 2, 1, 3, 3, 4, 3, 2, 3, 2, 4, 2, 2, 1, 1, 4, 1, 1, }
+	elseif sequence == 6 then        abilitySequence = { 3, 1, 2, 3, 3, 4, 3, 1, 3, 1, 4, 1, 1, 2, 2, 4, 2, 2, }
+    else PrintChat(string.format(" >> AutoLevelSpell Script disabled for %s", Menu.Ads.sequenceSpells))
+    end
+    if abilitySequence and #abilitySequence == 18 then
+        PrintChat(" >> Auto Level Spells 0.1 ")
+    else
+        PrintChat(" >> Error")
+        OnTick = function() end
+        return
+    end
+end
+
 function AutoLevel()
     local qL, wL, eL, rL = player:GetSpellData(_Q).level + qOff, player:GetSpellData(_W).level + wOff, player:GetSpellData(_E).level + eOff, player:GetSpellData(_R).level + rOff
     if qL + wL + eL + rL < player.level then
@@ -22,39 +45,14 @@ function AutoLevel()
         end
     end
 end
-
-function OnLoad()
-  Main()
-end
  
-function CarregarSequencia()
-    local sequenciaCarregada = Menu.ads.sequencia
--- Want a champion disabled? Put "--" in front of their line! --
-        if sequenciaCarregada == 1 then        abilitySequence = { 1, 2, 3, 1, 1, 4, 1, 2, 1, 2, 4, 2, 2, 3, 3, 4, 3, 3, }
-	elseif sequenciaCarregada == 2 then        abilitySequence = { 1, 3, 2, 1, 1, 4, 1, 3, 1, 3, 4, 3, 3, 2, 2, 4, 2, 2, }
-	elseif sequenciaCarregada == 3 then        abilitySequence = { 2, 1, 3, 2, 2, 4, 2, 1, 2, 1, 4, 1, 1, 3, 3, 4, 3, 3, }
-	elseif sequenciaCarregada == 4 then        abilitySequence = { 2, 3, 1, 2, 2, 4, 2, 3, 2, 3, 4, 3, 3, 1, 1, 4, 1, 1, }
-	elseif sequenciaCarregada == 5 then        abilitySequence = { 3, 2, 1, 3, 3, 4, 3, 2, 3, 2, 4, 2, 2, 1, 1, 4, 1, 1, }
-	elseif sequenciaCarregada == 6 then        abilitySequence = { 3, 1, 2, 3, 3, 4, 3, 1, 3, 1, 4, 1, 1, 2, 2, 4, 2, 2, }
-	else PrintChat(string.format(" >> AutoLevelSpell Script disabled for %s", sequenciaCarregada))
-    end
-    if abilitySequence and #abilitySequence == 18 then
-        PrintChat(" >> Tyler Auto Level Spells 0.1 ")
-    else
-        PrintChat(" >> Error")
-        OnTick = function() end
-        return
-    end
+function OnLoad()
 
-end
-
-function Menu()
-	Menu = scriptConfig("AutoLevel", "sequencial")
-	Menu.Ads:addParam("AutoLevelspells", "Auto-Level Spells", SCRIPT_PARAM_ONOFF, false)
-	Menu.ads.addParam("sequencia", "Skill Mode", SCRIPT_PARAM_LIST, 1, {"RQWE", "RQEW", "RWQE", "RWEQ", "REWQ", "REQW"})
+	Menu = scriptConfig("AutoLevel", player.charName)
 	Menu:addSubMenu("["..myHero.charName.." - AutoLevel]", "Ads")
+    Menu.Ads:addParam("sequenceSpells", "Sequence Spells", SCRIPT_PARAM_LIST, 1, { 'RQWE', 'RQEW', 'RWQE', 'RWEQ', 'REWQ', 'REQW' })
+	Menu.Ads:addParam("AutoLevelspells", "Auto-Level Spells", SCRIPT_PARAM_ONOFF, false)
 end
-
 --- BoL Script Status Connector --- 
 local ScriptKey = "QDGCLEGJDDL" -- AutoLevelSkill auth key
 local ScriptVersion = "0.1"
