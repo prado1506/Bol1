@@ -26,7 +26,7 @@ end
     else PrintChat(string.format(" >> AutoLevelSpell Script disabled for %s", Menu.Ads.sequenceSpells))
     end
 	if abilitySequence and #abilitySequence == 18 then
-        PrintChat(" >> Carry Tyler1 Auto Level Spells "..version..)
+        PrintChat(" >> Carry Tyler1 Auto Level Spells "..version.."")
     else
         PrintChat(" >> Error")
         OnTick = function() end
@@ -36,7 +36,7 @@ end
 
 function OnLoad()
 
-	PrintChat(" >> Loading Tyler1 Auto Level Spells "..version..)
+	PrintChat(" >> Loading Tyler1 Auto Level Spells "..version.."")
 	Menu = scriptConfig("AutoLevel", player.charName)
 	Menu:addSubMenu("["..myHero.charName.." - AutoLevel]", "Ads")
     Menu.Ads:addParam("sequenceSpells", "Sequence Spells", SCRIPT_PARAM_LIST, 1, { 'RQWE', 'RQEW', 'RWQE', 'RWEQ', 'REWQ', 'REQW' })
