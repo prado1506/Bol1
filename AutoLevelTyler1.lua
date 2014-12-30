@@ -50,7 +50,7 @@ function OnLoad()
 
 	Menu = scriptConfig("AutoLevel", player.charName)
 	Menu:addSubMenu("["..myHero.charName.." - AutoLevel]", "Ads")
-    	Menu.Ads:addParam("sequenceSpells", "Sequence Spells", SCRIPT_PARAM_LIST, 1, { 'RQWE', 'RQEW', 'RWQE', 'RWEQ', 'REWQ', 'REQW' })
+	Menu.Ads:addParam("sequenceSpells", "Sequence Spells", SCRIPT_PARAM_LIST, 1, { 'RQWE', 'RQEW', 'RWQE', 'RWEQ', 'REWQ', 'REQW' })
 	Menu.Ads:addParam("AutoLevelspells", "Auto-Level Spells", SCRIPT_PARAM_ONOFF, false)
 end
 --- BoL Script Status Connector --- 
