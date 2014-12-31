@@ -1,56 +1,54 @@
-local version = "0.4"
+local version = "1.0"
 local abilitySequence
-local qOff, wOff, eOff, rOff = 0,0,0,0
+local ini=false
 
 function OnTick()
 
-    if Menu.Ads.AutoLevelspells and Menu.start then
-		Carry()
-        AutoLevel()
+    if Menu.AutoLevelspells then
+		Start()
+		if ini then
+			AutoLevel()
+		end
     end
-end	
+end
+
+function Start()
+
+	if Menu.start then 
+		Carry()
+	end
+end
+	
 
 function AutoLevel()
     autoLevelSetSequence(abilitySequence)
 end
  
  function Carry()
-    local sequence = Menu.Ads.sequenceSpells
-	
+    local sequence = Menu.sequenceSpells
+		  ini = true
+		  
         if sequence == 1 then        abilitySequence = { 1, 2, 3, 1, 1, 4, 1, 2, 1, 2, 4, 2, 2, 3, 3, 4, 3, 3, }
 	elseif sequence == 2 then        abilitySequence = { 1, 3, 2, 1, 1, 4, 1, 3, 1, 3, 4, 3, 3, 2, 2, 4, 2, 2, }
 	elseif sequence == 3 then        abilitySequence = { 2, 1, 3, 2, 2, 4, 2, 1, 2, 1, 4, 1, 1, 3, 3, 4, 3, 3, }
 	elseif sequence == 4 then        abilitySequence = { 2, 3, 1, 2, 2, 4, 2, 3, 2, 3, 4, 3, 3, 1, 1, 4, 1, 1, }
 	elseif sequence == 5 then        abilitySequence = { 3, 2, 1, 3, 3, 4, 3, 2, 3, 2, 4, 2, 2, 1, 1, 4, 1, 1, }
 	elseif sequence == 6 then        abilitySequence = { 3, 1, 2, 3, 3, 4, 3, 1, 3, 1, 4, 1, 1, 2, 2, 4, 2, 2, }
-    else PrintChat(string.format(" >> AutoLevelSpell Script disabled for %s", Menu.Ads.sequenceSpells))
+    else PrintChat(string.format(" >> AutoLevelSpell Script disabled for %s", Menu.sequenceSpells))
     end
 end
 
 function OnLoad()
---	local inicio=false
 
 	PrintChat(" >> Loading Tyler1 Auto Level Spells "..version.."")
-	Menu = scriptConfig("AutoLevel", player.charName)
+	Menu = scriptConfig("["..myHero.charName.." - AutoLevel]", player.charName)
 	
-	Menu:addParam("sep", "-- Active Script --", SCRIPT_PARAM_INFO, "")
-	Menu:addParam("start", "Auto-Level Start", SCRIPT_PARAM_ONOFF, false)
-	
-	Menu:addSubMenu("["..myHero.charName.." - AutoLevel]", "Ads")
-    Menu.Ads:addParam("sequenceSpells", "Sequence Spells", SCRIPT_PARAM_LIST, 1, { 'RQWE', 'RQEW', 'RWQE', 'RWEQ', 'REWQ', 'REQW' })
-	Menu.Ads:addParam("AutoLevelspells", "Auto-Level Spells", SCRIPT_PARAM_ONOFF, false)
-	Menu.Ads=false
-	
--	--[[if Menu.Ads.AutoLevelspells and Menu.start then
-		Carry()
-		if abilitySequence and #abilitySequence == 18 then
-			PrintChat(" >> tyler Auto Level Spells teste ")
-		else
-			PrintChat(" >> Error")
-			OnTick = function() end
-			return
-		end
-	end	]]--
-	
+	Menu:addParam("sep2", "1 - Define on/off  for autoLevel ", SCRIPT_PARAM_INFO, "")
+	Menu:addParam("AutoLevelspells", "Auto-Level Spells for "..myHero.charName, SCRIPT_PARAM_ONOFF, false)
+	Menu:addParam("sep1", "2 - Define Sequence for "..myHero.charName, SCRIPT_PARAM_INFO, "")
+    Menu:addParam("sequenceSpells", "Sequence Spells", SCRIPT_PARAM_LIST, 1, { 'RQWE', 'RQEW', 'RWQE', 'RWEQ', 'REWQ', 'REQW' })
+	Menu:addParam("sep3", "3 - for load Script... ", SCRIPT_PARAM_INFO, "")
+	Menu:addParam("start", "Just Press Key ", SCRIPT_PARAM_ONKEYDOWN, false, 76)
+
 	PrintChat(" >> Tyler1 Auto Level Spells Loaded..")
 end
