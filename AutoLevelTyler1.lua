@@ -39,7 +39,7 @@ function OnLoad()
 	Menu:addSubMenu("["..myHero.charName.." - AutoLevel]", "Ads")
     Menu.Ads:addParam("sequenceSpells", "Sequence Spells", SCRIPT_PARAM_LIST, 1, { 'RQWE', 'RQEW', 'RWQE', 'RWEQ', 'REWQ', 'REQW' })
 	Menu.Ads:addParam("AutoLevelspells", "Auto-Level Spells", SCRIPT_PARAM_ONOFF, false)
-	Menu.Start=false
+	Menu
 	
 -	--[[if Menu.Ads.AutoLevelspells and Menu.start then
 		Carry()
