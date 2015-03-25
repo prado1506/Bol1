@@ -1,15 +1,13 @@
-local version = "1.0"
+local version = "1.2"
 local abilitySequence
 local ini=false
 
 function OnTick()
 
-    if Menu.AutoLevelspells then
 		Start()
 		if ini then
 			AutoLevel()
 		end
-    end
 end
 
 function Start()
