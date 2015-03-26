@@ -3,11 +3,12 @@ local abilitySequence
 local ini=false
 
 function OnTick()
-
+	--if Menu.AutoLevelspells then
 		Start()
 		if ini then
 			AutoLevel()
 		end
+	--end
 end
 
 function Start()
