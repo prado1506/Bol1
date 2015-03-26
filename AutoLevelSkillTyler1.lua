@@ -1,14 +1,12 @@
-local version = "1.2"
+local version = "1.5"
 local abilitySequence
 local ini=false
 
 function OnTick()
-	--if Menu.AutoLevelspells then
 		Start()
 		if ini then
 			AutoLevel()
 		end
-	--end
 end
 
 function Start()
@@ -41,9 +39,7 @@ function OnLoad()
 
 	PrintChat(" >> Loading Tyler1 Auto Level Spells "..version.."")
 	Menu = scriptConfig("["..myHero.charName.." - AutoLevel]", player.charName)
-	
-	--Menu:addParam("sep2", "1 - Define on/off  for autoLevel ", SCRIPT_PARAM_INFO, "")
-	--Menu:addParam("AutoLevelspells", "Auto-Level Spells for "..myHero.charName, SCRIPT_PARAM_ONOFF, false)
+
 	Menu:addParam("sep1", "2 - Define Sequence for "..myHero.charName, SCRIPT_PARAM_INFO, "")
     Menu:addParam("sequenceSpells", "Sequence Spells", SCRIPT_PARAM_LIST, 1, { 'RQWE', 'RQEW', 'RWQE', 'RWEQ', 'REWQ', 'REQW' })
 	Menu:addParam("sep3", "3 - for load Script... ", SCRIPT_PARAM_INFO, "")
