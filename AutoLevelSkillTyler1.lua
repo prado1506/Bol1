@@ -41,7 +41,7 @@ function OnLoad()
 	Menu = scriptConfig("["..myHero.charName.." - AutoLevel]", player.charName)
 
 	Menu:addParam("sep1", "2 - Define Sequence for "..myHero.charName, SCRIPT_PARAM_INFO, "")
-    Menu:addParam("sequenceSpells", "Sequence Spells", SCRIPT_PARAM_LIST, 1, { 'RQWE', 'RQEW', 'RWQE', 'RWEQ', 'REWQ', 'REQW' })
+    Menu:addParam("sequenceSpells", "Sequence Spells", SCRIPT_PARAM_LIST, 1, { 'R-Q-W-E', 'R-Q-E-W', 'R-W-Q-E', 'R-W-E-Q', 'R-E-W-Q', 'R-E-Q-W' })
 	Menu:addParam("sep3", "3 - for load Script... ", SCRIPT_PARAM_INFO, "")
 	Menu:addParam("start", "Just Press Key ", SCRIPT_PARAM_ONKEYDOWN, false, 76)
 
