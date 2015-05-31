@@ -1,6 +1,9 @@
-local version = "1.5"
+local version = "2.0"
 local abilitySequence
 local ini=false
+local _autoLevel = { spellsSlots = { SPELL_1, SPELL_2, SPELL_3, SPELL_4 }, levelSequence = {}, nextUpdate = 0, tickUpdate = 5 }
+local __autoLevel__OnTick
+local rOFF=0
 
 function OnTick()
 		Start()
@@ -10,17 +13,15 @@ function OnTick()
 end
 
 function Start()
-
 	if Menu.start then 
 		Carry()
 	end
 end
-	
 
 function AutoLevel()
-    autoLevelSetSequence(abilitySequence)
+	autoLevelSetSequenceCustom(abilitySequence)
 end
- 
+
  function Carry()
     local sequence = Menu.sequenceSpells
 		  ini = true
@@ -35,15 +36,57 @@ end
     end
 end
 
+local function autoLevel__OnLoad()
+    if not __autoLevel__OnTick then
+        function __autoLevel__OnTick()
+            local tick = os.clock()
+            if _autoLevel.nextUpdate > tick then return end
+            _autoLevel.nextUpdate = tick + Menu.DelayTime
+            local realLevel = rOFF + GetHeroLeveled()
+            if player.level > realLevel and _autoLevel.levelSequence[realLevel + 1] ~= nil then
+                local splell = _autoLevel.levelSequence[realLevel + 1]
+                if splell == 0 and type(_autoLevel.onChoiceFunction) == "function" then splell = _autoLevel.onChoiceFunction() end
+                if type(splell) == "number" and splell >= 1 and splell <= 4 then LevelSpell(_autoLevel.spellsSlots[splell]) end
+            end
+        end
+
+        AddTickCallback(__autoLevel__OnTick)
+    end
+end
+
+function autoLevelSetSequenceCustom(sequence)
+    assert(sequence == nil or type(sequence) == "table", "autoLevelSetSequence : wrong argument types (<table> or nil expected)")
+    autoLevel__OnLoad()
+    local sequence = sequence or {}
+    for i = 1, 18 do
+        local spell = sequence[i]
+        if type(spell) == "number" and spell >= 0 and spell <= 4 then
+            _autoLevel.levelSequence[i] = spell
+       -- else
+     --       _autoLevel.levelSequence[i] = nil
+        end
+    end
+end
+
+function RLoad()
+	if player.charName == "Jayce" or player.charName == "Elise" then
+		rOFF=-1
+	else
+		rOFF=0
+	end
+end
+
 function OnLoad()
-
-	PrintChat(" >> Loading Tyler1 Auto Level Spells "..version.."")
-	Menu = scriptConfig("["..myHero.charName.." - AutoLevel]", player.charName)
-
-	Menu:addParam("sep1", "2 - Define Sequence for "..myHero.charName, SCRIPT_PARAM_INFO, "")
-    Menu:addParam("sequenceSpells", "Sequence Spells", SCRIPT_PARAM_LIST, 1, { 'R-Q-W-E', 'R-Q-E-W', 'R-W-Q-E', 'R-W-E-Q', 'R-E-W-Q', 'R-E-Q-W' })
+	print("<b><font color=\"#FF0000\">Tyler1 Auto Level Spells:</font></b> <font color=\"#FFFFFF\">Loading...</font>"..version)
+	Menu = scriptConfig("["..myHero.charName.." - AutoLevel]", player.charName.."AutoLevel")
+	Menu:addParam("sep1", "1 - Change for Humanizer "..myHero.charName, SCRIPT_PARAM_INFO, "")
+	Menu:addParam("DelayTime", "Humanizer Time", SCRIPT_PARAM_SLICE, 1, 1, 60, 0)
+	Menu:addParam("sep2", "2 - Define Sequence for "..myHero.charName, SCRIPT_PARAM_INFO, "")
+	Menu:addParam("sequenceSpells", "Sequence Spells", SCRIPT_PARAM_LIST, 1, { 'R-Q-W-E', 'R-Q-E-W', 'R-W-Q-E', 'R-W-E-Q', 'R-E-W-Q', 'R-E-Q-W' })
 	Menu:addParam("sep3", "3 - for load Script... ", SCRIPT_PARAM_INFO, "")
 	Menu:addParam("start", "Just Press Key ", SCRIPT_PARAM_ONKEYDOWN, false, 76)
-
-	PrintChat(" >> Tyler1 Auto Level Spells Loaded..")
+	Menu:addParam("sep4", "Version Info: ", SCRIPT_PARAM_INFO, version)
+	
+	RLoad()
+	print("<b><font color=\"#FF0000\">Tyler1 Auto Level Spells:</font></b> <font color=\"#FFFFFF\">Sucessfully Loaded..!</font>")
 end
