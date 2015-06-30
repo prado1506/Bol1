@@ -29,7 +29,7 @@ local _autoLevel = { spellsSlots = { SPELL_1, SPELL_2, SPELL_3, SPELL_4 }, level
 local __autoLevel__OnTick
 local rOFF=0
 --update func--
-local version = "2.12"
+local version = "2.13"
 local AUTOUPDATE = true
 local UPDATE_HOST = "raw.github.com"
 local UPDATE_PATH = "/prado1506/Bol1/master/AutoLevelSkillTyler1.lua".."?rand="..math.random(1,10000)
@@ -65,8 +65,10 @@ function OnTick()
 end
 
 function Start()
-	if Menu.start then 
-		Carry()
+	if Menu.start then
+		if player.charName == "Jayce" then CarryRoff()
+		else CarryRon() 
+		end	
 	end
 end
 
@@ -74,7 +76,7 @@ function AutoLevel()
 	autoLevelSetSequenceCustom(abilitySequence)
 end
 
- function Carry()
+ function CarryRon()
     local sequence = Menu.sequenceSpells
 		  ini = true
 		  
@@ -84,6 +86,20 @@ end
 	elseif sequence == 4 then        abilitySequence = { 2, 3, 1, 2, 2, 4, 2, 3, 2, 3, 4, 3, 3, 1, 1, 4, 1, 1, }
 	elseif sequence == 5 then        abilitySequence = { 3, 2, 1, 3, 3, 4, 3, 2, 3, 2, 4, 2, 2, 1, 1, 4, 1, 1, }
 	elseif sequence == 6 then        abilitySequence = { 3, 1, 2, 3, 3, 4, 3, 1, 3, 1, 4, 1, 1, 2, 2, 4, 2, 2, }
+    else PrintChat(string.format(" >> AutoLevelSpell Script disabled for %s", Menu.sequenceSpells))
+    end
+end
+
+ function CarryRoff()
+    local sequence = Menu.sequenceSpells
+		  ini = true
+		  
+        if sequence == 1 then        abilitySequence = { 1, 2, 3, 1, 1, 1, 2, 2, 1, 2, 1, 2, 2, 3, 3, 3, 3, 3, }
+	elseif sequence == 2 then        abilitySequence = { 1, 3, 2, 1, 1, 1, 3, 3, 1, 3, 1, 3, 3, 2, 2, 2, 2, 2, }
+	elseif sequence == 3 then        abilitySequence = { 2, 1, 3, 2, 2, 2, 1, 1, 2, 1, 2, 1, 1, 3, 3, 3, 3, 3, }
+	elseif sequence == 4 then        abilitySequence = { 2, 3, 1, 2, 2, 2, 3, 3, 2, 3, 2, 3, 3, 1, 1, 1, 1, 1, }
+	elseif sequence == 5 then        abilitySequence = { 3, 2, 1, 3, 3, 3, 2, 2, 3, 2, 3, 2, 2, 1, 1, 1, 1, 1, }
+	elseif sequence == 6 then        abilitySequence = { 3, 1, 2, 3, 3, 3, 1, 1, 3, 1, 3, 1, 1, 2, 2, 2, 2, 2, }
     else PrintChat(string.format(" >> AutoLevelSpell Script disabled for %s", Menu.sequenceSpells))
     end
 end
@@ -121,7 +137,10 @@ function autoLevelSetSequenceCustom(sequence)
 end
 
 function RLoad()
-	if player.charName == "Jayce" or player.charName == "Elise" then
+	if player.charName == "Jayce" 
+	or player.charName == "Elise" 
+	or player.charName == "Karma" 
+	or player.charName == "Nidalee" then
 		rOFF=-1
 	else
 		rOFF=0
