@@ -7,7 +7,7 @@ _G.LevelSpell = function(id)
 		[_R] = 0xAD,
 	}
 	local p = CLoLPacket(0x009C)
-	p.vTable = 0xEE6D00
+	p.vTable = 0xF0A57C
 	p:EncodeF(myHero.networkID)
 	for i = 1, 4 do	p:Encode1(0xB4)	end
 	for i = 1, 4 do	p:Encode1(0x69)	end
