@@ -9,7 +9,7 @@ _G.LevelSpell = function(id)
 		[_R] = 0x97,
 	}
 	local p = CLoLPacket(0x0142)
-	p.vTable = 0xE9F988
+	p.vTable = 0xEBFE44
 	p:EncodeF(myHero.networkID)
 	p:Encode1(0x2A)
 	for i = 1, 4 do	p:Encode1(0x12)	end
@@ -26,7 +26,7 @@ local _autoLevel = { spellsSlots = { SPELL_1, SPELL_2, SPELL_3, SPELL_4 }, level
 local __autoLevel__OnTick
 local rOFF=0
 --update func--
-local version = "2.17"
+local version = "2.171"
 local AUTOUPDATE = true
 local UPDATE_HOST = "raw.github.com"
 local UPDATE_PATH = "/prado1506/Bol1/master/AutoLevelSkillTyler1.lua".."?rand="..math.random(1,10000)
