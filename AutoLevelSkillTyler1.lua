@@ -1,23 +1,20 @@
-if not VIP_USER then _G.LevelSpell = function() end return end
-print("LevelSpell override is active")
-
 _G.LevelSpell = function(id)
-	local offsets = {
-		[_Q] = 0xFB,
-		[_W] = 0xEB,
-		[_E] = 0xDB,
-		[_R] = 0xCB,
-	}
-	local p = CLoLPacket(0x10A)
-	p.vTable = 0xEDD384
-	p:EncodeF(myHero.networkID)
-	for i = 1, 4 do	p:Encode1(0x13)	end
-	p:Encode1(0x9E)
-	p:Encode1(offsets[id])
-	for i = 1, 4 do	p:Encode1(0x81)	end
-	for i = 1, 4 do	p:Encode1(0x57)	end
-	for i = 1, 4 do	p:Encode1(0x00)	end
-	SendPacket(p)
+local offsets = {
+[_Q] = 0xFB,
+[_W] = 0xEB,
+[_E] = 0xDB,
+[_R] = 0xCB,
+}
+local p = CLoLPacket(0x10A)
+p.vTable = 0xE4DB24
+p:EncodeF(myHero.networkID)
+for i = 1, 4 do p:Encode1(0x13) end
+p:Encode1(0x0A)
+p:Encode1(offsets[id])
+for i = 1, 4 do p:Encode1(0xB4) end
+for i = 1, 4 do p:Encode1(0x84) end
+for i = 1, 4 do p:Encode1(0x00) end
+SendPacket(p)
 end
 
 local abilitySequence
@@ -26,7 +23,7 @@ local _autoLevel = { spellsSlots = { SPELL_1, SPELL_2, SPELL_3, SPELL_4 }, level
 local __autoLevel__OnTick
 local rOFF=0
 --update func--
-local version = "2.18"
+local version = "2.181"
 local AUTOUPDATE = true
 local UPDATE_HOST = "raw.github.com"
 local UPDATE_PATH = "/prado1506/Bol1/master/AutoLevelSkillTyler1.lua".."?rand="..math.random(1,10000)
