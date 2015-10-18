@@ -30,7 +30,7 @@ local _autoLevel = { spellsSlots = { SPELL_1, SPELL_2, SPELL_3, SPELL_4 }, level
 local __autoLevel__OnTick
 local rOFF=0
 --update func--
-local version = "2.181"
+local version = "2.20"
 local AUTOUPDATE = true
 local UPDATE_HOST = "raw.github.com"
 local UPDATE_PATH = "/prado1506/Bol1/master/AutoLevelSkillTyler1.lua".."?rand="..math.random(1,10000)
