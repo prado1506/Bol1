@@ -1,21 +1,28 @@
 _G.LevelSpell = function(id)
-local offsets = {
-[_Q] = 0xFB,
-[_W] = 0xEB,
-[_E] = 0xDB,
-[_R] = 0xCB,
-}
-local p = CLoLPacket(0x10A)
-p.vTable = 0xE4DB24
-p:EncodeF(myHero.networkID)
-for i = 1, 4 do p:Encode1(0x13) end
-p:Encode1(0x0A)
-p:Encode1(offsets[id])
-for i = 1, 4 do p:Encode1(0xB4) end
-for i = 1, 4 do p:Encode1(0x84) end
-for i = 1, 4 do p:Encode1(0x00) end
-SendPacket(p)
-end
+		local offsets = {
+			[_Q] = 0x32,
+			[_W] = 0x78,
+			[_E] = 0xE7,
+			[_R] = 0xD5,
+		}
+		local p
+		p = CLoLPacket(21)
+		
+		if GetGameVersion():sub(1,10) == "5.20.0.284" then
+			p.vTable = 15151928
+		else
+			p.vTable = 15821468
+		end
+		p:EncodeF(myHero.networkID)
+		for i = 1, 4 do p:Encode1(0x04) end
+		p:Encode1(offsets[id])
+		for i = 1, 4 do p:Encode1(0x16) end
+		for i = 1, 4 do p:Encode1(0x1D) end
+		p:Encode1(0x4E)
+		p:Encode1(0x2C)
+		for i = 1, 3 do p:Encode1(0x00) end
+		SendPacket(p)
+		end
 
 local abilitySequence
 local ini=false
