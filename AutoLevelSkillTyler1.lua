@@ -1,5 +1,4 @@
-_G.LevelSpell = function test(id)
-
+_G.LevelSpell = function(id)
   local offsets = { 
     [_Q] = 0xB8,
     [_W] = 0xBA,
